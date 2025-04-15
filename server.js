@@ -3,36 +3,33 @@ const logger = require('morgan');
 const path = require('path');
 
 const app = express();
+
+// Middleware to parse URL-encoded form data
 app.use(express.urlencoded({ extended: true }));
+
+// Logger for requests
 app.use(logger('dev'));
 
 // Serve static files (like your HTML file)
 const publicPath = path.join(__dirname, 'public');
 app.use(express.static(publicPath));
 
-// Variables to store form data temporarily
+// Global variable to store form data
 let formData = {};
 
-// Random number test route
+// Route to generate a random number (test)
 app.get('/do_a_random', (req, res) => {
   res.send(`Your number is: ${Math.floor(Math.random() * 100) + 1}`);
 });
 
 // POST handler for the Mad Lib form
-app.post('/submit-form', (req, res) => {
-  // Store form data in variables
+app.post('/ITC505/lab-7/index.html', (req, res) => {
   const { creature, object, verb, adjective, place } = req.body;
 
-  // Store in formData
-  formData = {
-    creature,
-    object,
-    verb,
-    adjective,
-    place
-  };
+  // Store form data in the global variable (formData)
+  formData = { creature, object, verb, adjective, place };
 
-  // Check if all form fields are filled
+  // Check if all fields are filled
   if (!creature || !object || !verb || !adjective || !place) {
     return res.send(`
       <h1>Form Incomplete</h1>
@@ -41,15 +38,16 @@ app.post('/submit-form', (req, res) => {
     `);
   }
 
-  // Redirect to a new route to display the story
-  res.redirect('/view-story');
+  // After form submission, we directly store the data and allow user to view the generated story
+  res.redirect('/view-story'); // Just redirect to view the story (without server response method)
 });
 
-// Route to display the generated Mad Lib story
+// Route to view the generated Mad Lib story (using the stored form data)
 app.get('/view-story', (req, res) => {
+  // Access the stored form data from the global variable
   const { creature, object, verb, adjective, place } = formData;
 
-  // Generate the story using the stored form data
+  // Generate the story using stored data
   const story = `
     <body style="background-color: #f0f8ff; font-family: Arial; padding: 20px;">
       <h1>Your Magical Mad Lib Story</h1>
