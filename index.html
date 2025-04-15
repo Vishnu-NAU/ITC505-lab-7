@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Magical Mad Lib Adventure</title>
+  <link rel="stylesheet" href="style.css"> <!-- If you have a separate CSS file -->
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -65,43 +66,52 @@
       max-width: 800px;
       border-radius: 8px;
     }
+
+    #story {
+      background-color: #e6f7ff;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 600px;
+      margin: 20px auto;
+      display: none;
+    }
   </style>
 </head>
 <body>
   <h1>Magical Mad Lib Adventure</h1>
 
-  <form method="POST" action="/ITC505/lab-7/index.html">
+  <form id="madLibForm">
     <label for="creature">Fantasy Creature:</label>
-    <input type="text" name="creature" id="creature" required>
+    <input type="text" id="creature" required>
 
     <label for="object">Magical Object:</label>
-    <input type="text" name="object" id="object" required>
+    <input type="text" id="object" required>
 
     <label for="verb">Verb (Past Tense):</label>
-    <input type="text" name="verb" id="verb" required>
+    <input type="text" id="verb" required>
 
     <label for="adjective">Adjective:</label>
-    <input type="text" name="adjective" id="adjective" required>
+    <input type="text" id="adjective" required>
 
     <label for="place">Place:</label>
-    <input type="text" name="place" id="place" required>
+    <input type="text" id="place" required>
 
     <button type="submit">Generate Story</button>
   </form>
 
+  <div id="story"></div> <!-- This will display the generated story -->
+
   <div class="addendum">
     <h2>Addendum</h2>
-    <p>This Mad Lib lab was created using HTML for the form and an Express.js backend to handle POST requests. The form collects five inputs: a fantasy creature, magical object, verb, adjective, and place. These are used to generate a fun story, returned to the user via the server.</p>
-    <p>The Express server handles both static content and dynamic POST requests. Styling was added using CSS with a gradient background to make the page visually appealing. The form submits data back to the same page using the POST method.</p>
-    <p>This setup allows for simple and interactive server-side handling of form data using Express.</p>
+    <p>This Mad Lib lab was created using HTML for the form and JavaScript to handle form submission and dynamically generate the story. The form collects five inputs: a fantasy creature, magical object, verb, adjective, and place. These are used to generate a fun story that is displayed directly on the same page.</p>
+    <p>JavaScript is used to process the form input, and the story is generated dynamically without any page reload.</p>
   </div>
 
   <footer>
     <p>Last updated: <span id="lastModified"></span></p>
   </footer>
 
-  <script>
-    document.getElementById('lastModified').textContent = document.lastModified;
-  </script>
+  <!-- Link to external JS file -->
+  <script src="server.js"></script>
 </body>
 </html>
