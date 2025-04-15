@@ -1,58 +1,37 @@
-const express = require('express');
-const logger = require('morgan');
-const path = require('path');
-const server = express();
+document.getElementById('lastModified').textContent = document.lastModified;
 
-// Middleware
-server.use(express.urlencoded({ extended: true }));
-server.use(logger('dev'));
+// Function to handle the form submission and generate the story
+document.getElementById('madLibForm').addEventListener('submit', function(event) {
+  event.preventDefault();  // Prevent form from reloading the page
 
-// Serve static files from 'public' folder
-const publicServedFilesPath = path.join(__dirname, 'public');
-server.use(express.static(publicServedFilesPath));
+  // Get values from form fields
+  const creature = document.getElementById('creature').value;
+  const object = document.getElementById('object').value;
+  const verb = document.getElementById('verb').value;
+  const adjective = document.getElementById('adjective').value;
+  const place = document.getElementById('place').value;
 
-// Global variable to store the Mad Lib story
-let generatedStory = "";
+  // Check if all fields are filled
+  if (!creature || !object || !verb || !adjective || !place) {
+    alert("Please fill in all fields.");
+    return;
+  }
 
-// POST handler to store form data in a variable
-server.post('/ITC505/lab-7/index.html', (req, res) => {
-    const { creature, object, verb, adjective, place } = req.body;
+  // Generate the Mad Lib story
+  const story = `
+    <h1>Your Magical Mad Lib Story</h1>
+    <p>In the faraway land of <strong>${place}</strong>, a <strong>${adjective}</strong> <strong>${creature}</strong> found a <strong>${object}</strong> and <strong>${verb}</strong> into legend.</p>
+    <button onclick="resetForm()">Create Another Story</button>
+  `;
 
-    // Check if any of the fields are empty
-    if (!creature || !object || !verb || !adjective || !place) {
-        generatedStory = `
-            <h1>Form Incomplete</h1>
-            <p>Please fill in all fields before submitting.</p>
-            <a href="/ITC505/lab-7/index.html">Back to Form</a>
-        `;
-    } else {
-        // Construct the story and store it in the variable
-        generatedStory = `
-            <body style="background-color: #f0f8ff; font-family: Arial; padding: 20px;">
-                <h1>Your Magical Mad Lib Story</h1>
-                <p>In the faraway land of <strong>${place}</strong>, a <strong>${adjective}</strong> <strong>${creature}</strong> found a <strong>${object}</strong> and <strong>${verb}</strong> into legend.</p>
-                <a href="/ITC505/lab-7/index.html">Create Another Story</a>
-            </body>
-        `;
-    }
-    
-    // Store it in a session or in-memory variable (not used directly for response)
-    // This is done so you can refer to it later without needing to send a response immediately
+  // Display the story
+  const storyDiv = document.getElementById('story');
+  storyDiv.innerHTML = story;
+  storyDiv.style.display = 'block';  // Show the story div
 });
 
-// Route to view the generated Mad Lib story
-server.get('/view-story', (req, res) => {
-    // Access the stored story or error message
-    res.send(generatedStory);
-});
-
-// Port setup
-let port = 80;
-if (process.argv[2] === 'local') {
-    port = 8080;
+// Function to reset the form and hide the story
+function resetForm() {
+  document.getElementById('madLibForm').reset();
+  document.getElementById('story').style.display = 'none';
 }
-
-// Start the server
-server.listen(port, () => {
-    console.log(` Server running at http://localhost:${port}/`);
-});
