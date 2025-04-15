@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Magical Mad Lib Adventure</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #d0e, #aaf);
+      padding: 20px;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 600px;
+      margin: 20px auto;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: bold;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #6a0dad;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    button:hover {
+      background-color: #5800a3;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9em;
+    }
+
+    .addendum {
+      background-color: #f9f9f9;
+      border-left: 6px solid #6a0dad;
+      padding: 15px;
+      margin: 30px auto;
+      max-width: 800px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Magical Mad Lib Adventure</h1>
+
+  <form method="POST" action="/ITC505/lab-7/index.html">
+    <label for="creature">Fantasy Creature:</label>
+    <input type="text" name="creature" id="creature" required>
+
+    <label for="object">Magical Object:</label>
+    <input type="text" name="object" id="object" required>
+
+    <label for="verb">Verb (Past Tense):</label>
+    <input type="text" name="verb" id="verb" required>
+
+    <label for="adjective">Adjective:</label>
+    <input type="text" name="adjective" id="adjective" required>
+
+    <label for="place">Place:</label>
+    <input type="text" name="place" id="place" required>
+
+    <button type="submit">Generate Story</button>
+  </form>
+
+  <div class="addendum">
+    <h2>Addendum</h2>
+    <p>This Mad Lib lab was created using HTML for the form and an Express.js backend to handle POST requests. The form collects five inputs: a fantasy creature, magical object, verb, adjective, and place. These are used to generate a fun story, returned to the user via the server.</p>
+    <p>The Express server handles both static content and dynamic POST requests. Styling was added using CSS with a gradient background to make the page visually appealing. The form submits data back to the same page using the POST method.</p>
+    <p>This setup allows for simple and interactive server-side handling of form data using Express.</p>
+  </div>
+
+  <footer>
+    <p>Last updated: <span id="lastModified"></span></p>
+  </footer>
+
+  <script>
+    document.getElementById('lastModified').textContent = document.lastModified;
+  </script>
+</body>
+</html>
